@@ -1,0 +1,51 @@
+---
+title: ""
+author: ""
+date: ""
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+hre = here::here("bingo_grid")
+fles = list.files(hre, pattern = ".JPG")
+```
+
+<style>
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  background-color: #2196F3;
+  padding: 10px;
+}
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+</style>
+
+<div class="grid-container">
+  <div class="grid-item"><img src='`r fles[1]`'  width='75%' height='75%'><br>Lia</div>
+  <div class="grid-item"><img src='`r fles[2]`'  width='75%' height='75%'><br>Avery</div>
+  <div class="grid-item"><img src='`r fles[3]`'  width='75%' height='75%'><br>Shaun</div>
+  <div class="grid-item"><img src='`r fles[4]`'  width='75%' height='75%'><br>Torren</div>
+  <div class="grid-item"><img src='`r fles[5]`'  width='75%' height='75%'><br>Remi</div>
+  <div class="grid-item"><img src='`r fles[6]`'  width='75%' height='75%'><br>Avery</div>
+  <div class="grid-item"><img src='`r fles[7]`'  width='75%' height='75%'><br>Maddie</div>
+  <div class="grid-item"><img src='`r fles[8]`'  width='75%' height='75%'><br>Arin</div>
+  <div class="grid-item"><img src='`r fles[9]`'  width='75%' height='75%'><br>Kinley</div>
+  <div class="grid-item"><img src='`r fles[10]`' width='75%' height='75%'><br>Tyler</div>
+  <div class="grid-item"><img src='`r fles[11]`' width='75%' height='75%'><br>Patrick</div>
+  <div class="grid-item"><img src='`r fles[12]`' width='75%' height='75%'><br>Porter</div>
+  <div class="grid-item"><img src='`r fles[13]`' width='75%' height='75%'><br>Layla</div>
+  <div class="grid-item"><img src='`r fles[14]`' width='75%' height='75%'><br>Roma</div>
+  <div class="grid-item"><img src='`r fles[15]`' width='75%' height='75%'><br>Nivedita</div>
+  <div class="grid-item"><img src='`r fles[1]`'  width='75%' height='75%'><br>My Name</div>
+  <div class="grid-item"><img src='`r fles[2]`'  width='75%' height='75%'><br>My name</div>
+  <div class="grid-item"><img src='`r fles[3]`'  width='75%' height='75%'><br>My name</div>
+  <div class="grid-item"><img src='`r fles[4]`'  width='75%' height='75%'><br>My name</div>
+  <div class="grid-item"><img src='`r fles[5]`'  width='75%' height='75%'><br>My name</div>
+</div>
