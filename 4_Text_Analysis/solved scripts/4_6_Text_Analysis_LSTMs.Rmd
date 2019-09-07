@@ -13,7 +13,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
 
 # Initialize package
 library(keras)
@@ -39,21 +39,39 @@ Implement an LSTM model for text (i.e. sequence) analysis.
 Let's take a look at an RNN on the Reuters dataset. First with only 20 words.
 
 ```{r}
+reticulate::conda_python("r-reticulate")
+```
 
-library(keras)
+```{python}
+import numpy as np
+# save np.load
+np_load_old = np.load
 
-# Number of most common words to consider as features
-max_features <- 10000
+# modify the default parameters of np.load
+np.load = lambda *a,**k: np_load_old(*a, allow_pickle=True, **k)
 
+#from keras.datasets import reuters
+
+#(train_data, train_labels), (test_data, test_labels) = reuters.load_data(num_words=10000)
+```
+
+```{r data, warning = FALSE}
+max_features = 10000
 # Loads the data as lists of integers
 c(c(input_train_original, train_targets), c(input_test_original, test_targets)) %<-% dataset_reuters(num_words = max_features)
+```
 
+```{r}
 # Cut off the text after 20 words (i.e. among the max_features most common words)
 maxlen <- 100
 
 # Turns the lists of integers into a 2D integer tensor of shape (samples, maxlen)
 input_train <- pad_sequences(input_train_original, maxlen = maxlen)
 input_test <- pad_sequences(input_test_original, maxlen = maxlen)
+```
+
+```{python}
+np.load = np_load_old
 ```
 
 ## LSTM in Keras
