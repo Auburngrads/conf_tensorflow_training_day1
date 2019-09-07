@@ -40,12 +40,34 @@ Here we'll see some basic ways of working with text, using one-hot encoding.
 
 ## Part 1: Data Preparation
 
-For multi-class classification, we previously use `sparse_cateogircal_crossentropy`, here we'll see  `categorical_crossentropy`.
+For multi-class classification, we previously use `sparse_categorical_crossentropy`, here we'll see `categorical_crossentropy`.
 
 ### Obtain data
 
-```{r data, warning = FALSE}
+```{r}
+reticulate::conda_python(envname = "r-reticulate")
+```
+
+```{python}
+import numpy as np
+# save np.load
+np_load_old = np.load
+
+# modify the default parameters of np.load
+np.load = lambda *a,**k: np_load_old(*a, allow_pickle=True, **k)
+
+# from keras.datasets import reuters
+# 
+# (train_data, train_labels), (test_data, test_labels) = reuters.load_data(num_words=10000)
+
+```
+
+```{r data, warning = FALSE, eval=FALSE}
 c(c(train_data, train_labels), c(test_data, test_labels)) %<-% dataset_reuters(num_words = 10000)
+```
+
+```{python}
+np.load = np_load_old
 ```
 
 ### Examine data:
