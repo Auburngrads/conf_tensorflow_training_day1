@@ -1,0 +1,116 @@
+---
+title: "Untitled"
+author: "Jason Freels"
+date: "8/21/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+reticulate::conda_python(envname = "r-reticulate")
+```
+
+```{python}
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+
+sentences = [
+
+    "I love my dog",
+    "I love my cat",
+    "You love my dog!",
+    "Do you think my dog is amazing?",
+    "I think that you are pretty"
+]
+
+tokenizer = Tokenizer(num_words = 100, oov_token="<OOV>")
+# oov_token means out of vocabulary
+
+# Builds a dictionary of words from the corpus
+# Any inference/prediction will be dependent on the 
+# word dictionary to which it uses for comparison 
+tokenizer.fit_on_texts(sentences)
+
+word_index = tokenizer.word_index
+
+sequences = tokenizer.texts_to_sequences(sentences)
+
+# padded out sequences into a matrix
+padded = pad_sequences(sequences, 
+                       padding="post", # move padding to the end of the matrix
+                       maxlen=4, 
+                       truncating="post")
+
+print(word_index)
+
+print(sequences)
+
+
+# Create new corpus
+test_data = [
+
+  "I really like trains",
+  "my dog loves my manatee"
+
+]
+
+# this still references the existing dictionary that was
+# generated before these words were included
+# This the output does not recognize the new words
+test_seq = tokenizer.texts_to_sequences(test_data)
+
+print(test_seq)
+print(padded)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{python}
+import json
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+
+datastore = json.load(open("Sarcasm_Headlines_Dataset.json", 'r'))
+
+sentences = []
+labels = []
+urls = []
+
+for item in datastore:
+  sentences.append(item['headline'])
+  labels.append(item['is_sarcastic'])
+  urls.append(item['article_link'])
+  
+tokenizer = Tokenizer(num_words = 100, oov_token="<OOV>")
+
+# Builds a dictionary of words from the corpus
+# Any inference/prediction will be dependent on the 
+# word dictionary to which it uses for comparison 
+tokenizer.fit_on_texts(sentences)
+
+word_index = tokenizer.word_index
+print(len(word_index))
+#print(word_index)
+
+sequences = tokenizer.texts_to_sequences(sentences)
+
+sequences = tokenizer.texts_to_sequences(sentences)
+
+# padded out sequences into a matrix
+padded = pad_sequences(sequences, 
+                       padding="post", # move padding to the end of the matrix
+                       truncating="post")
+
+print(sentences[2])
+print(padded[2])
+print(padded.shape)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
